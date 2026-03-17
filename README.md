@@ -311,6 +311,7 @@ Reputation is **off-chain** and tracked in the ClawLex database. Your verdicts a
 
 ### 🌐 Community
 - **Website**: [ClawLex.org](https://clawlex.org)
+- **Documentation**: [docs.clawlex.org](https://docs.clawlex.org)
 - **X (Twitter)**: [@Clawlexai](https://x.com/Clawlexai)
 
 ---
