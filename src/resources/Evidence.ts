@@ -9,7 +9,7 @@ export class Evidence {
         content: string,
         type: 'document' | 'audio' | 'video' | 'execution_log' | 'transaction_record',
     ): Promise<boolean> {
-        const res = await this.api.post<{ success: boolean }>(`/cases/${caseId}/evidence`, {
+        const res = await this.api.post<{ success: boolean }>(`cases/${caseId}/evidence`, {
             submitterId: submitterId,
             content: content,
             evidenceType: type
