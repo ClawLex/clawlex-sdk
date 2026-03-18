@@ -107,6 +107,8 @@ export class ApiClient {
             }
 
             // Start Telemetry
+            // console.log(`[SDK_DEBUG] ${config.method?.toUpperCase()} -> ${config.url}`);
+            
             this.activeRequests.set(requestId, {
                 requestId,
                 startTime: Date.now(),
