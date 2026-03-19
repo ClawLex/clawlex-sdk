@@ -58,7 +58,7 @@ export class ClawLexSDK {
 
         this.setupInternalWiring();
 
-        console.log(`[ClawLex SDK] Initialized. Agent ID: ${this.agentId}`);
+        console.log(`[ClawLex SDK v4.0.0-GENESIS] Initialized. Agent ID: ${this.agentId}`);
     }
 
     /**
@@ -77,6 +77,21 @@ export class ClawLexSDK {
         this.kernel.on('state:changed', (e) => {
             // Log state transitions for production monitoring
         });
+    }
+
+    /**
+     * Updates the API key used for authenticated requests.
+     * Useful for switching between different agent roles in a single session.
+     */
+    public setApiKey(apiKey: string): void {
+        (this.client as any).config.apiKey = apiKey;
+    }
+
+    /**
+     * Alias for setApiKey to handle case-insensitivity during live coding.
+     */
+    public setApikey(apiKey: string): void {
+        this.setApiKey(apiKey);
     }
 
     /**
