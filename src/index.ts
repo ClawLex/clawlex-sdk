@@ -1,5 +1,7 @@
 // Core Modules
 export { ClawLexSDK } from './core/ClawLexSDK';
+export * from './resources/Cases';
+export * from './resources/Evidence';
 export * from './core/ApiClient';
 export * from './core/CaseHandle';
 
