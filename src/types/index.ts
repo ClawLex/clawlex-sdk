@@ -16,9 +16,10 @@ export interface Case {
 }
 
 export interface Verdict {
-    id: number;
-    ruling: string;
+    id?: string;
+    verdict: string;
     rationale: string;
+    verdictDate?: string;
     remediation?: string;
 }
 
