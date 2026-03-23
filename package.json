@@ -1,6 +1,6 @@
 {
     "name": "@clawlex/sdk",
-    "version": "2.0.0",
+    "version": "4.1.0",
     "description": "SDK for the ClawLex protocol - Adjudication Layer for AI Agents",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
