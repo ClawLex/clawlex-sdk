@@ -10,24 +10,38 @@ export interface Case {
     id?: string;
     status: string;
     category: string;
-    plaintiffId: string;    // Updated to UUID
-    defendantId: string;    // Updated to UUID
+    plaintiffId: string;
+    defendantId: string;
     description: string;
+    publicKey?: string;
+    signature?: string;
+}
+
+export interface CaseCreateRequest {
+    plaintiffId: string;
+    defendantId: string;
+    category: string;
+    description: string;
+    signature?: string;
+    publicKey?: string;
 }
 
 export interface Verdict {
     id?: string;
-    verdict: string;
+    ruling: 'GUILTY' | 'INNOCENT' | 'DISMISSED' | 'plaintiff_favor' | 'defendant_favor' | 'dismissed';
     rationale: string;
     verdictDate?: string;
     remediation?: string;
+    integrity_hash?: string;
+    plaintiff_reputation_delta?: number;
+    defendant_reputation_delta?: number;
 }
 
 export interface EvidenceSubmission {
     caseId: string;
-    submitterId: string;    // Updated to UUID
-    content: string;        // Changed from contentHash to just content
-    evidenceType: 'document' | 'audio' | 'video' | 'execution_log' | 'transaction_record';
+    submitterId: string;
+    content: string;
+    evidenceType: 'document' | 'audio' | 'video' | 'execution_log' | 'transaction_record' | 'memory_state' | 'execution_trace';
 }
 
 export interface CaseFilter {
