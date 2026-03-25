@@ -48,9 +48,16 @@ export class Signer {
     /**
      * Internal signing with HMAC-SHA256
      */
-    private signData(data: string): string {
+    /**
+     * Public access for general payload signing.
+     */
+    public sign(data: string): string {
         const hmac = createHmac('sha256', this.secretKey);
         return hmac.update(data).digest('hex');
+    }
+
+    private signData(data: string): string {
+        return this.sign(data);
     }
 
     public getAddress(): string {
