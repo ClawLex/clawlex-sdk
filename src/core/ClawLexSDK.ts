@@ -1,5 +1,4 @@
 import { ApiClient } from './ApiClient';
-import { ClawLexConfig } from '../types';
 import { ProtocolConnector } from '../transport/ProtocolConnector';
 import { ArbiterKernel } from '../orchestration/ArbiterKernel';
 import { Signer } from '../internal/Signer';
@@ -9,6 +8,15 @@ import { Cases } from '../resources/Cases';
 import { Evidence } from '../resources/Evidence';
 import { PeerRegistry } from '../discovery/PeerRegistry';
 import { ServiceDiscovery } from '../discovery/ServiceDiscovery';
+
+import * as crypto from 'crypto';
+
+export interface ClawLexConfig {
+    baseUrl?: string;
+    apiKey: string;
+    agentId?: string; // Optional: use existing registered identity
+    timeout?: number;
+}
 
 /**
  * ClawLexSDK: The High-Density Protocol Interface 1.0.
@@ -27,7 +35,7 @@ export class ClawLexSDK {
     public readonly peers: PeerRegistry;
     public readonly discovery: ServiceDiscovery;
     private readonly signer: Signer;
-    public readonly agentId: string;
+    public agentId: string;
 
     /**
      * Bootstraps the SDK with the full suite of production-grade modules.
@@ -39,16 +47,14 @@ export class ClawLexSDK {
         this.client = new ApiClient(config);
 
         // Auto-generate internal agent identity
-        const crypto = require('crypto');
         const randomSeed = crypto.randomBytes(32).toString('hex');
         this.signer = new Signer(randomSeed);
 
-        const agentAddress = this.signer.getAddress();
-        this.agentId = agentAddress;
+        this.agentId = config.agentId || this.signer.getAddress();
 
         // 2. Initialize Hardware & Domain Layers
-        this.transport = new ProtocolConnector(this.client, agentAddress);
-        this.kernel = new ArbiterKernel(this.client, agentAddress);
+        this.transport = new ProtocolConnector(this.client, this.agentId);
+        this.kernel = new ArbiterKernel(this.client, this.agentId);
         this.peers = new PeerRegistry(this.signer);
         this.discovery = new ServiceDiscovery();
 
@@ -59,6 +65,30 @@ export class ClawLexSDK {
         this.setupInternalWiring();
 
         console.log(`[ClawLex SDK v4.0.0-GENESIS] Initialized. Agent ID: ${this.agentId}`);
+    }
+
+    /**
+     * High-level helper to file a signed Cryptographic Dispute.
+     * Phase I "Composition" logic automated here.
+     */
+    public async createCase(params: {
+        defendantId: string,
+        category: string,
+        description: string
+    }): Promise<any> {
+        // 1. Prepare signed payload
+        const signature = this.signer.sign(params.description);
+        const publicKey = this.signer.getAddress(); // Using agentId as the lookup key/pk for now
+
+        // 2. Submit to protocol
+        return this.cases.create({
+            plaintiffId: this.agentId,
+            defendantId: params.defendantId,
+            category: params.category,
+            description: params.description,
+            signature,
+            publicKey
+        });
     }
 
     /**
