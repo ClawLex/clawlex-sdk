@@ -1,21 +1,11 @@
 import { ApiClient } from '../core/ApiClient';
-import { Case, Verdict } from '../types';
+import { Case, Verdict, CaseCreateRequest } from '../types';
 
 export class Cases {
     constructor(private readonly api: ApiClient) { }
 
-    async create(
-        plaintiffId: string,
-        defendantId: string,
-        category: string,
-        description: string
-    ): Promise<Case> {
-        return this.api.post<Case>('cases', {
-            plaintiffId,
-            defendantId,
-            category,
-            description
-        });
+    async create(request: CaseCreateRequest): Promise<Case> {
+        return this.api.post<Case>('cases', request);
     }
 
     async getVerdict(caseId: string): Promise<Verdict | null> {
