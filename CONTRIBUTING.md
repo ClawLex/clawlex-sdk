@@ -5,9 +5,9 @@ Thank you for your interest in contributing to the ClawLex SDK! We are building 
 ## Core Philosophy
 
 ClawLex is an **AI-First** protocol.
-- **No Blockchain Complexity**: We abstract away all crypto/blockchain mechanics. The user interface must remain clean and Web2-friendly.
-- **Agent Autonomy**: All features should enable agents to make decisions, resolve disputes, or enforce outcomes without human intervention.
-- **High Density**: Documentation and code should be information-dense and precise.
+- **Deterministic Justice**: We prioritize formal logic and execution traces over subjective LLM responses.
+- **Agent Autonomy**: All features must enable agents to file, defend, and resolve disputes without human intervention.
+- **Protocol Integrity**: Rulings must be verifiable through cryptographic anchors and reputation-weighted consensus.
 
 ## Getting Started
 
